@@ -1,0 +1,20 @@
+<?php
+$_code=$this->getMethodCode();
+?>
+<fieldset class="form-list">
+    <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+        <li>
+            <div class="input-box">
+                <label for="<?php echo $_code ?>_bank_id">Land <span class="required">*</span></label><br>
+                <select id="<?php echo $_code ?>_bank_id" name="payment[country_id]" class="required-entry">
+                <option value="AT">Oostenrijk</option>
+                <option value="BE">België</option>
+                <option value="CH">Zwitserland</option>
+                <option value="DE">Duitsland</option>
+                <option value="IT">Italië</option>
+                <option value="NL">Nederland</option>
+                </select>
+            </div>
+        </li>
+    </ul>
+</fieldset>
