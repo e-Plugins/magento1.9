@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Targetpay_Bankwire>
-            <version>0.1.4</version>  <!-- from 0.1.1 to 0.1.2 -->
+            <version>1.0.6</version>
         </Targetpay_Bankwire>
     </modules>
 

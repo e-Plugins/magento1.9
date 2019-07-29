@@ -22,7 +22,7 @@
  */
 class TargetPayCore
 {
-    const APP_ID = 'dw_magento1.x_1.0.5';
+    const APP_ID = 'dw_magento1.x_1.0.6';
     
     // Constants
     const MIN_AMOUNT = 84;

@@ -9,7 +9,7 @@
  *
  * 	@file 		iDEAL Model
  *	@author		Yellow Melon B.V. / www.idealplugins.nl
- *  
+ *
  *  v2.1	Added pay by invoice
  */
 require_once (BP . DS . 'app' . DS . 'code' . DS . 'local' . DS . "Targetpay" . DS . "targetpay.class.php");
@@ -61,7 +61,6 @@ class Targetpay_Bankwire_Model_Bankwire extends Base_Targetpay_Model
     public function additionalParameters($order, TargetPayCore $targetPay)
     {
         $targetPay->bindParam('salt', $targetPay->bwSalt);
-        $targetPay->bindParam('email', $order->customer_email);
         $targetPay->bindParam('userip', $_SERVER["REMOTE_ADDR"]);
     }
 }

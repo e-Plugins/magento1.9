@@ -3,7 +3,7 @@
 class Base_Targetpay_Model extends Mage_Payment_Model_Method_Abstract
 {
     public $rtlo;
-    
+
     public function __construct()
     {
         $this->rtlo = Mage::getStoreConfig('payment/' . $this->_code . '/rtlo');
@@ -16,19 +16,20 @@ class Base_Targetpay_Model extends Mage_Payment_Model_Method_Abstract
     public function setupPayment($bankId = false)
     {
         $lastOrderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+        /** @var Mage_Sales_Model_Order $order */
         $order = Mage::getModel('sales/order')->load($lastOrderId);
         $errMsg = '';
-        
+
         if (! $order->getId()) {
             Mage::throwException('Cannot load order #' . $lastOrderId);
         }
-        
+
         $orderId = $order->getRealOrderId();
         $language = (Mage::app()->getLocale()->getLocaleCode() == 'nl_NL') ? "nl" : "en";
         $targetPay = new TargetPayCore($this->_tp_method, $this->rtlo, $language, false);
         $targetPay->setAmount(round($order->getGrandTotal() * 100));
         $targetPay->setDescription("Order #" . $orderId);
-        
+
         if($bankId) {
             if($this->_code == 'sofort') {
                 $targetPay->setCountryId($bankId);
@@ -36,7 +37,7 @@ class Base_Targetpay_Model extends Mage_Payment_Model_Method_Abstract
             $targetPay->setBankId($bankId);
 
         }
-        
+
         $targetPay->setReturnUrl(Mage::getUrl("$this->_code/$this->_code/return", array(
             '_secure' => true,
             'order_id' => $orderId
@@ -49,31 +50,52 @@ class Base_Targetpay_Model extends Mage_Payment_Model_Method_Abstract
         if($this->_code == 'bankwire' || $this->_code == 'afterpay') {
             $this->additionalParameters($order, $targetPay); // Adding extra info for Bankwire startAPI
         }
-        
+
+        // Consumer'e email address
+        /** @var string  $consumer_email */
+        $consumer_email = $order->customer_email;
+        if(empty($consumer_email)) {
+            if(!empty($order->getCustomerEmail())) {
+                $consumer_email = $order->getCustomerEmail();
+            } else {
+                $billingData = $order->getBillingAddress()->getData();
+                $shippingData = $order->getShippingAddress()->getData();
+                if(isset($billingData['email']) && !empty($billingData['email'])) {
+                    $consumer_email = $billingData['email'];
+                } else if(isset($shippingData['email']) && !empty($shippingData['email'])) {
+                    $consumer_email = $shippingData['email'];
+                }
+            }
+        }
+
+        if(!empty($consumer_email)) {
+            $targetPay->bindParam('email', $consumer_email);
+        }
+
         $bankUrl = $targetPay->startPayment();
-        
+
         if (! $bankUrl) {
             $errMsg .= "TargetPay error: " . $targetPay->getErrorMessage();
         }
-        
+
         if ($errMsg) {
             $this->restoreCart($order); // restore cart because magento automatically clear cart after place order
             Mage::getSingleton('core/session')->addError($errMsg);
             return false;
         }
-        
+
         $write = Mage::getSingleton('core/resource')->getConnection('core_write');
-        
+
         $write->query("INSERT INTO `targetpay`
             SET `order_id`=" . $write->quote($orderId) . ",
                 `method`=" . $write->quote($this->_tp_method) . ",
                 `targetpay_txid`=" . $write->quote($targetPay->getTransactionId()) . ",
                 `more` = " . $write->quote($targetPay->getMoreInformation()));
-        
+
         if($this->_code == 'bankwire') {
             return $lastOrderId;
         }
-        
+
         return $bankUrl;
     }
 
@@ -95,7 +117,7 @@ class Base_Targetpay_Model extends Mage_Payment_Model_Method_Abstract
                 Mage::helper('checkout')->__('Cannot add the item to shopping cart.');
             }
         }
-        
+
         $cart->save();
     }
 
@@ -115,17 +137,17 @@ class Base_Targetpay_Model extends Mage_Payment_Model_Method_Abstract
             'amount' => intval(floatval($amount * 100)),
             'description' => $creditmemo["comment_text"],
             'internalNote' => 'Internal note - OrderId: ' . $order->getIncrement_id() . ', Amount: ' . $amount . ', InvoiceID: ' . $payment->getCreditmemo()
-                ->getInvoice()
-                ->getIncrement_id() . ', Customer Email: ' . $order->getCustomer_email(),
+                    ->getInvoice()
+                    ->getIncrement_id() . ', Customer Email: ' . $order->getCustomer_email(),
             'consumerName' => $payment->getOrder()->getCustomer_firstname() . ' ' . $payment->getOrder()->getCustomer_lastname()
         );
-        
+
         $targetPay = new TargetPayCore($this->_tp_method, $this->rtlo);
-        
+
         if (! $targetPay->refund(Mage::getStoreConfig("payment/$this->_code/token"), $dataRefund)) {
             Mage::throwException($targetPay->getErrorMessage());
         }
-        
+
         return $this;
     }
 }
