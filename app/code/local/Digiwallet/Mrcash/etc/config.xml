@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Digiwallet_Mrcash>
+            <version>1.0.8</version>
+        </Digiwallet_Mrcash>
+    </modules>
+
+    <global>
+        <models>
+            <mrcash>
+                <class>Digiwallet_Mrcash_Model</class>
+            </mrcash>
+        </models>
+
+        <resources>
+            <mrcash_setup>
+                <setup>
+                    <module>Digiwallet_Mrcash</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </mrcash_setup>
+            <mrcash_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </mrcash_write>
+            <mrcash_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </mrcash_read>
+        </resources>
+    </global>
+
+    <frontend>
+        <routers>
+            <mrcash>
+                <use>standard</use>
+                <args>
+                    <module>Digiwallet_Mrcash</module>
+                    <frontName>mrcash</frontName>
+                </args>
+            </mrcash>
+        </routers>
+    </frontend>
+
+    <default>
+        <payment>
+            <mrcash>
+                <sort_order>3</sort_order>
+                <active>0</active>
+                <rtlo>93929</rtlo> <!-- // Default DigiWallet -->
+                <token></token> <!-- you can obtain your api key in your organization dashboard on https://digiwallet.nl -->
+                <model>mrcash/mrcash</model>
+                <order_status>1</order_status>
+                <complete_status>4</complete_status>
+                <autocreate_invoice>1</autocreate_invoice>
+                <title>Bancontact</title>
+            </mrcash>
+        </payment>
+    </default>
+</config>

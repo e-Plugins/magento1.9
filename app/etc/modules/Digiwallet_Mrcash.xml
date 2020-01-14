@@ -1,0 +1,12 @@
+<config>
+    <modules>
+        <Digiwallet_Mrcash>
+            <active>true</active>
+            <codePool>local</codePool>
+            <version>1.0.8</version>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Digiwallet_Mrcash>
+    </modules>
+</config>

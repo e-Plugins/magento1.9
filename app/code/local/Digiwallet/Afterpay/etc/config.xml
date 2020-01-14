@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+       <Digiwallet_Afterpay>
+          <version>1.0.8</version>
+       </Digiwallet_Afterpay>
+    </modules>
+
+    <global>
+        <models>
+            <afterpay>
+                <class>Digiwallet_Afterpay_Model</class>
+            </afterpay>
+        </models>
+
+        <resources>
+            <afterpay_setup>
+                <setup>
+                    <module>Digiwallet_Afterpay</module>
+			        <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                    </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </afterpay_setup>
+            <afterpay_write>
+                <connection>
+                  <use>core_write</use>
+                </connection>
+            </afterpay_write>
+            <afterpay_read>
+               <connection>
+                <use>core_read</use>
+              </connection>
+            </afterpay_read>
+        </resources>
+    </global>
+
+	<frontend>
+		<routers>
+			<afterpay>
+				<use>standard</use>
+				<args>
+					<module>Digiwallet_Afterpay</module>
+					<frontName>afterpay</frontName>
+				</args>
+			</afterpay>
+		</routers>
+	</frontend>
+
+    <default>
+        <payment>
+            <afterpay>
+                <sort_order>1</sort_order>
+				<active>1</active>
+                <rtlo>93929</rtlo> <!-- // Default DigiWallet -->
+                <token></token> <!-- you can obtain your api key in your organization dashboard on https://digiwallet.nl -->
+				<model>afterpay/afterpay</model>
+                <order_status>1</order_status>
+                <complete_status>4</complete_status>
+				<autocreate_invoice>1</autocreate_invoice>
+				<title>Afterpay</title>
+            </afterpay>
+         </payment>
+    </default>
+</config>

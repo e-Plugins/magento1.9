@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Digiwallet_Paypaltm>
+            <version>1.0.8</version>
+        </Digiwallet_Paypaltm>
+    </modules>
+
+    <global>
+        <models>
+            <paypaltm>
+                <class>Digiwallet_Paypaltm_Model</class>
+            </paypaltm>
+        </models>
+
+        <resources>
+            <paypaltm_setup>
+                <setup>
+                    <module>Digiwallet_Paypaltm</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </paypaltm_setup>
+            <paypaltm_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </paypaltm_write>
+            <paypaltm_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </paypaltm_read>
+        </resources>
+    </global>
+
+    <frontend>
+        <routers>
+            <paypaltm>
+                <use>standard</use>
+                <args>
+                    <module>Digiwallet_Paypaltm</module>
+                    <frontName>paypaltm</frontName>
+                </args>
+            </paypaltm>
+        </routers>
+    </frontend>
+
+    <default>
+        <payment>
+            <paypaltm>
+                <sort_order>0</sort_order>
+                <active>0</active>
+                <rtlo>93929</rtlo> <!-- // Default DigiWallet -->
+                <token></token> <!-- you can obtain your api key in your organization dashboard on https://digiwallet.nl -->
+                <model>paypaltm/paypaltm</model>
+                <order_status>1</order_status>
+                <complete_status>4</complete_status>
+                <autocreate_invoice>1</autocreate_invoice>
+                <title>Paypal</title>
+            </paypaltm>
+        </payment>
+    </default>
+</config>
