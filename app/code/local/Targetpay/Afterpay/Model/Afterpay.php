@@ -9,7 +9,7 @@
  *
  * 	@file 		iDEAL Model
  *	@author		Yellow Melon B.V. / www.idealplugins.nl
- *
+ *  
  *  v2.1	Added pay by invoice
  */
 require_once(BP . DS . 'app' . DS . 'code' . DS . 'local' . DS . "Targetpay" . DS . "targetpay.class.php");
@@ -254,19 +254,8 @@ class Targetpay_Afterpay_Model_Afterpay extends Base_Targetpay_Model
         foreach ($order_items as $item_data) {
             $product_name = $item_data->getName();
             $item_quantity = $item_data->getQtyOrdered();
-            $itemTotalExcludingTax = (int)$item_quantity * (float)$item_data->getPrice();
-            $itemTotalIncludingTax = (int)$item_quantity * (float)$item_data->getPriceInclTax();
-
-            $already_added = false;
-            foreach ($invoicelines as $invoiceline) {
-                if($invoiceline['productCode'] == $item_data->getSku()) {
-                    $already_added = true;
-                }
-            }
-
-            if($already_added && $itemTotalIncludingTax == 0) {
-                continue;
-            }
+            $itemTotalExcludingTax = (float)$item_data->getPrice();
+            $itemTotalIncludingTax = (float)$item_data->getPriceInclTax();
 
             $invoicelines[] = [
                 'productCode' => (string)$item_data->getSku(),
@@ -279,8 +268,6 @@ class Targetpay_Afterpay_Model_Afterpay extends Base_Targetpay_Model
             $totalProductAmountIncludingTax += $itemTotalIncludingTax;
             $totalProductAmountExcludingTax += $itemTotalExcludingTax;
         }
-
-
 
         $invoicelines[] = [
             'productCode' => 'SHIPPING',
