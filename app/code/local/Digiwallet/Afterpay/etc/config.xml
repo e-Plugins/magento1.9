@@ -2,7 +2,7 @@
 <config>
     <modules>
        <Digiwallet_Afterpay>
-          <version>1.0.8</version>
+          <version>1.0.9</version>
        </Digiwallet_Afterpay>
     </modules>
 
@@ -53,7 +53,7 @@
             <afterpay>
                 <sort_order>1</sort_order>
 				<active>1</active>
-                <rtlo>93929</rtlo> <!-- // Default DigiWallet -->
+                <rtlo>39411</rtlo> <!-- // Default DigiWallet -->
                 <token></token> <!-- you can obtain your api key in your organization dashboard on https://digiwallet.nl -->
 				<model>afterpay/afterpay</model>
                 <order_status>1</order_status>

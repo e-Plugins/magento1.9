@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+       <Digiwallet_Eps>
+          <version>1.0.9</version>
+       </Digiwallet_Eps>
+    </modules>
+
+    <global>
+        <models>
+            <eps>
+                <class>Digiwallet_Eps_Model</class>
+            </eps>
+        </models>
+
+        <resources>
+            <eps_setup>
+                <setup>
+                    <module>Digiwallet_Eps</module>
+			        <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                    </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </eps_setup>
+            <eps_write>
+                <connection>
+                  <use>core_write</use>
+                </connection>
+            </eps_write>
+            <eps_read>
+               <connection>
+                <use>core_read</use>
+              </connection>
+            </eps_read>
+        </resources>
+    </global>
+
+	<frontend>
+		<routers>
+			<eps>
+				<use>standard</use>
+				<args>
+					<module>Digiwallet_Eps</module>
+					<frontName>eps</frontName>
+				</args>
+			</eps>
+		</routers>
+	</frontend>
+
+    <default>
+        <payment>
+            <eps>
+                <sort_order>1</sort_order>
+				<active>1</active>
+                <rtlo>39411</rtlo> <!-- // Default DigiWallet -->
+                <token></token> <!-- you can obtain your api key in your organization dashboard on https://digiwallet.nl -->
+				<model>eps/eps</model>
+                <order_status>1</order_status>
+                <complete_status>4</complete_status>
+				<autocreate_invoice>1</autocreate_invoice>
+				<title>EPS</title>
+            </eps>
+         </payment>
+    </default>
+</config>

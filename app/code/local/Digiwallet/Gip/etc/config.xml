@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+       <Digiwallet_Gip>
+          <version>1.0.9</version>
+       </Digiwallet_Gip>
+    </modules>
+
+    <global>
+        <models>
+            <gip>
+                <class>Digiwallet_Gip_Model</class>
+            </gip>
+        </models>
+
+        <resources>
+            <gip_setup>
+                <setup>
+                    <module>Digiwallet_Gip</module>
+			        <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                    </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gip_setup>
+            <gip_write>
+                <connection>
+                  <use>core_write</use>
+                </connection>
+            </gip_write>
+            <gip_read>
+               <connection>
+                <use>core_read</use>
+              </connection>
+            </gip_read>
+        </resources>
+    </global>
+
+	<frontend>
+		<routers>
+			<gip>
+				<use>standard</use>
+				<args>
+					<module>Digiwallet_Gip</module>
+					<frontName>GiroPay</frontName>
+				</args>
+			</gip>
+		</routers>
+	</frontend>
+
+    <default>
+        <payment>
+            <gip>
+                <sort_order>1</sort_order>
+				<active>1</active>
+                <rtlo>39411</rtlo> <!-- // Default DigiWallet -->
+                <token></token> <!-- you can obtain your api key in your organization dashboard on https://digiwallet.nl -->
+				<model>gip/gip</model>
+                <order_status>1</order_status>
+                <complete_status>4</complete_status>
+				<autocreate_invoice>1</autocreate_invoice>
+				<title>GiroPay</title>
+            </gip>
+         </payment>
+    </default>
+</config>
