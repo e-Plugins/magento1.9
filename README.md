@@ -12,7 +12,9 @@ TargetPay.com and Digiwallet.nl to your webstore.
 | Creditcard	|:heavy_check_mark:	|
 | Paysafecard	|:heavy_check_mark:	|
 | Sofort	|:heavy_check_mark:	|
-| Paypal	|:heavy_check_mark:	|
+| GiroPay	|:heavy_check_mark:	|
+| EPS	|:heavy_check_mark:	|
+| Paypal    |:heavy_check_mark:	|
 | Afterpay	|:heavy_check_mark:	|
 | Bankwire	|:heavy_check_mark:	|
 | Refund Creation	|:heavy_check_mark:	|
