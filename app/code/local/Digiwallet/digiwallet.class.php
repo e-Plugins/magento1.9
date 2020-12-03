@@ -22,7 +22,7 @@
  */
 class DigiwalletCore
 {
-    const APP_ID = 'dw_magento1.x_1.0.9';
+    const APP_ID = 'dw_magento1.x_1.1.0';
 
     // Constants
     const MIN_AMOUNT = 84;

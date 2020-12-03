@@ -31,7 +31,7 @@ require_once (BP . DS . 'app' . DS . 'code' . DS . 'local' . DS . "Digiwallet" .
  */
 class ClientCore
 {
-    const APP_ID = 'dw_magento1.x_1.0.9';
+    const APP_ID = 'dw_magento1.x_1.1.0';
 
     const MIN_AMOUNT = 0.84;
 
@@ -316,10 +316,7 @@ class ClientCore
         if(!empty($_SERVER['HTTP_CLIENT_IP'])){
             //ip from share internet
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
-            //ip pass from proxy
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }else{
+        } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         return $ip;
